@@ -1,29 +1,29 @@
 CREATE TABLE IF NOT EXISTS videos (
-    id BIGINT PRIMARY KEY,                                  -- Уникальный ID видео
-    creator_id BIGINT NOT NULL,                             -- ID автора видео
-    video_created_at TIMESTAMP NOT NULL,                    -- Дата и время публикации
-    views_count BIGINT DEFAULT 0 CHECK (views_count >= 0),  -- Кол-во просмотров
-    likes_count BIGINT DEFAULT 0 CHECK (likes_count >= 0),  -- Кол-во лайков                    
-    comments_count BIGINT DEFAULT 0,                        -- Кол-во комментариев
-    reports_count BIGINT DEFAULT 0,                         -- Кол-во репортов
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,         -- Время создания
-    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP          -- Время последнего обновления
+    id UUID PRIMARY KEY,
+    creator_id UUID NOT NULL,
+    video_created_at TIMESTAMP NOT NULL,
+    views_count BIGINT DEFAULT 0 CHECK (views_count >= 0),
+    likes_count BIGINT DEFAULT 0 CHECK (likes_count >= 0),                 
+    comments_count BIGINT DEFAULT 0,
+    reports_count BIGINT DEFAULT 0,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
 CREATE TABLE IF NOT EXISTS video_snapshots (
-    id BIGSERIAL PRIMARY KEY,                                               -- Уникальный ID снапшота
-    video_id BIGINT NOT NULL REFERENCES videos(id) ON DELETE CASCADE,       -- Ссылка на видео
-    snapshot_time TIMESTAMP NOT NULL,                                       -- Время замера
-    views_count BIGINT NOT NULL,                                            -- Просмотры на момент замера
-    likes_count BIGINT NOT NULL,                                            -- Лайки на момент замера
-    comments_count BIGINT NOT NULL,                                         -- Комментарии на момент замера
-    reports_count BIGINT NOT NULL,                                          -- Репорты на момент замера
-    delta_views_count BIGINT DEFAULT 0,                                     -- Прирост просмотров
-    delta_likes_count BIGINT DEFAULT 0,                                     -- Прирост лайков
-    delta_comments_count BIGINT DEFAULT 0,                                  -- Прирост комментариев
-    delta_reports_count BIGINT DEFAULT 0,                                   -- Прирост репортов
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,                         -- Время создания записи
-    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP                          -- Время последнего обновления
+    id UUID PRIMARY KEY,
+    video_id UUID NOT NULL REFERENCES videos(id) ON DELETE CASCADE,
+    snapshot_time TIMESTAMP NOT NULL,
+    views_count BIGINT NOT NULL,
+    likes_count BIGINT NOT NULL,
+    comments_count BIGINT NOT NULL,
+    reports_count BIGINT NOT NULL,
+    delta_views_count BIGINT DEFAULT 0,
+    delta_likes_count BIGINT DEFAULT 0,
+    delta_comments_count BIGINT DEFAULT 0,
+    delta_reports_count BIGINT DEFAULT 0,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
 
