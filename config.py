@@ -1,4 +1,5 @@
 import os
+
 from dotenv import load_dotenv
 
 load_dotenv()
@@ -10,9 +11,10 @@ class Config:
     POSTGRES_USER = os.getenv("POSTGRES_USER")
     POSTGRES_PASSWORD = os.getenv("POSTGRES_PASSWORD")
     
-    TELEGRAM_BOT_TOKEN = os.getenv("TELEGRAM_BOT_ENV")
+    TELEGRAM_BOT_TOKEN = os.getenv("TELEGRAM_BOT_TOKEN")
     
-    OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")
+    OLLAMA_URL = os.getenv("OLLAMA_URL")
+    OLLAMA_MODEL = os.getenv("OLLAMA_MODEL")
     
     APP_ENV = os.getenv("APP_ENV", "local")
     
