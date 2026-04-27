@@ -1,27 +1,27 @@
 <h1>Telegram Analytics Bot</h1>
 
-<p>Бот для Telegram, который принимает текстовые запросы на естественном языке и возвращает статистику по видео и видео-снапшотам из базы данных PostgreSQL через LLM (Ollama).</p>
+<p>A Telegram bot that accepts natural language text queries and returns statistics on videos and video snapshots from a PostgreSQL database via an LLM (Ollama).</p>
 
-<h2>1. Установка</h2>
+<h2>1. Installation</h2>
 <ol>
-    <li>Клонируйте репозиторий:
+    <li>Clone the repository:
         <pre><code>git clone &lt;https://github.com/Shjryoku/tz-analythics-bot&gt;
 cd &lt;https://github.com/Shjryoku/tz-analythics-bot&gt;</code></pre>
     </li>
-    <li>Создайте виртуальное окружение и активируйте его:
+    <li>Create and activate a virtual environment:
         <pre><code>python -m venv venv
 # Windows
 venv\Scripts\activate
 # Linux / MacOS
 source venv/bin/activate</code></pre>
     </li>
-    <li>Установите зависимости:
+    <li>Install dependencies:
         <pre><code>pip install -r requirements.txt</code></pre>
     </li>
 </ol>
 
-<h2>2. Настройка переменных окружения</h2>
-<p>Создайте файл <code>.env</code> в корне проекта на основе .env.example:</p>
+<h2>2. Environment Variables Setup</h2>
+<p>Create a <code>.env</code> file in the project root based on .env.example:</p>
 <pre><code>POSTGRES_HOST=localhost
 POSTGRES_PORT=5432
 POSTGRES_DB=your_db
@@ -30,29 +30,29 @@ POSTGRES_PASSWORD=your_password
 
 TELEGRAM_BOT_TOKEN=your_telegram_bot_token
 
-OLLAMA_URL=http://localhost:11434/api/generate
+OLLAMA_URL=[http://localhost:11434/api/generate](http://localhost:11434/api/generate)
 OLLAMA_MODEL=your_model_name
 
 APP_ENV=local</code></pre>
 
-<h2>3. Инициализация базы данных</h2>
-<p>Создайте таблицы Video и VideoSnapshot:</p>
+<h2>3. Database Initialization</h2>
+<p>Create the Video and VideoSnapshot tables:</p>
 <pre><code>python init_db.py</code></pre>
 
-<p>Импорт тестовых данных (опционально):</p>
+<p>Import test data (optional):</p>
 <pre><code>python import_json.py</code></pre>
-<p>По умолчанию используется файл <code>json_data/videos.json</code></p>
+<p>By default, the file <code>json_data/videos.json</code> is used</p>
 
-<h2>4. Запуск бота</h2>
+<h2>4. Running the Bot</h2>
 <pre><code>python bot/main.py</code></pre>
 <ul>
-    <li>Бот будет слушать новые сообщения через polling</li>
-    <li>Старые апдейты Telegram удаляются автоматически</li>
+    <li>The bot listens for new messages via polling</li>
+    <li>Old Telegram updates are automatically cleared</li>
 </ul>
 
-<h2>5. Примеры запросов</h2>
-<h3>1. Сколько всего видео?</h3>
-<pre><code>Сколько всего видео есть в системе?</code></pre>
+<h2>5. Example Queries</h2>
+<h3>1. How many videos are there in total?</h3>
+<pre><code>How many videos are there in the system?</code></pre>
 <pre><code>{
   "entity": "videos",
   "metric": null,
@@ -65,8 +65,8 @@ APP_ENV=local</code></pre>
   }
 }</code></pre>
 
-<h3>2. Сколько видео набрало больше 1000 просмотров?</h3>
-<pre><code>Сколько видео набрало больше 1000 просмотров?</code></pre>
+<h3>2. How many videos have more than 1000 views?</h3>
+<pre><code>How many videos have more than 1000 views?</code></pre>
 <pre><code>{
   "entity": "videos",
   "metric": "views",
@@ -79,8 +79,8 @@ APP_ENV=local</code></pre>
   }
 }</code></pre>
 
-<h3>3. Суммарный прирост просмотров за 28 ноября 2025</h3>
-<pre><code>На сколько просмотров в сумме выросли все видео 28 ноября 2025?</code></pre>
+<h3>3. Total view growth on November 28, 2025</h3>
+<pre><code>What is the total increase in views across all videos on November 28, 2025?</code></pre>
 <pre><code>{
   "entity": "video_snapshots",
   "metric": "views",
@@ -93,24 +93,21 @@ APP_ENV=local</code></pre>
   }
 }</code></pre>
 
-<h2>6. Логирование ошибок</h2>
-<p>Ошибки сохраняются в папку <code>logs</code> в файл:</p>
+<h2>6. Error Logging</h2>
+<p>Errors are saved in the <code>logs</code> folder in the file:</p>
 <pre><code>logs/errors.log</code></pre>
-<p>Логи ротационные: максимальный размер файла 1 КБ, сохраняется 1 резервная копия</p>
+<p>Logs are rotated: maximum file size is 1 KB, with 1 backup copy retained</p>
 
-<h2>7. Зависимости</h2>
+<h2>7. Dependencies</h2>
 <pre><code>aiogram>=2.25,&lt;3.0
 SQLAlchemy>=2.0
 psycopg2-binary>=2.9
 python-dotenv>=1.0
 requests>=2.31</code></pre>
 
-<h2>8. Примечания</h2>
+<h2>8. Notes</h2>
 <ul>
-    <li>Бот работает через Ollama LLM, поэтому локальный сервер Ollama должен быть доступен по <code>OLLAMA_URL</code>.</li>
-    <li>Все даты возвращаются в формате <code>YYYY-MM-DD</code>.</li>
-    <li>Фильтры <code>creator_id</code> и <code>views_gt</code> применяются при необходимости.</li>
+    <li>The bot works via the Ollama LLM, so a local Ollama server must be available at <code>OLLAMA_URL</code>.</li>
+    <li>All dates are returned in <code>YYYY-MM-DD</code> format.</li>
+    <li>Filters <code>creator_id</code> and <code>views_gt</code> are applied when needed.</li>
 </ul>
-
-</body>
-</html>
